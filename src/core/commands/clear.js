@@ -1,6 +1,6 @@
 export const clearCommand = {
     name: "clear",
     execute(args, context) {
-        context.updateState.set('messages', [{}]);
+        context.updateState.set('messages', []);
     }
 }
