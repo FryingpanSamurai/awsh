@@ -1,6 +1,6 @@
 export const pwdCommand = {
     name: "pwd",
-    execute(args, context) {
+    execute(args, options, context) {
         return context.state.currentDirectory;
     }
 }

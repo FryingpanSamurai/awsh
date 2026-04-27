@@ -1,6 +1,6 @@
 export const clearCommand = {
     name: "clear",
-    execute(args, context) {
+    execute(args, options, context) {
         context.updateState(currentState => {
             return {
                 ...currentState,
