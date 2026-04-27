@@ -22,10 +22,16 @@ class TerminalEngine {
     // this is where we make our 'plugins/commands' available to our system
     register(command) {
         this.commands.set(command.name, command);
+        
+        // we'll also need to register the commands with aliases
+        let aliases = command.aliases;
+        aliases.forEach(a => {
+            this.commands.set(a, command)
+        });
     }
 
     // update Terminal messages and command history
-    updateTerminalState(inputMessage, outputMessage, myCommand) {
+    updateOutput(inputMessage, outputMessage, myCommand) {
         terminalStateWritable.update(currentState => {
             return {
                 ...currentState,
@@ -40,6 +46,18 @@ class TerminalEngine {
                 ]
             }
         });
+    }
+
+    updateCommandHistory(myCommand) {
+        terminalStateWritable.update(currentState => {
+            return {
+                ...currentState,
+                commandHistory: [
+                    ...currentState.commandHistory,
+                    myCommand
+                ]
+            }
+        })
     }
 
     // updates the index of the state
@@ -86,13 +104,16 @@ class TerminalEngine {
             // ingest output to update UI
             if (result) {
                 outputMessage = { type: "output", content: result }
-                this.updateTerminalState(inputMessageFormatted, outputMessage, inputMessage);
+                this.updateOutput(inputMessageFormatted, outputMessage, inputMessage);
+            } else {
+                // no output for user, but we need to cache the command for history
+                this.updateCommandHistory(inputMessage);
             }
         } else {
             // update needed for error message
             let result = `${inputMessage} not a recognized command.`
             outputMessage = { type: "error", content: result };
-            this.updateTerminalState(inputMessageFormatted, outputMessage, inputMessage);
+            this.updateOutput(inputMessageFormatted, outputMessage, inputMessage);
         }
 
         // reset the command index after executing the command
