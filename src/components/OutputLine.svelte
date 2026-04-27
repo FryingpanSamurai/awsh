@@ -2,11 +2,23 @@
     let { msg } = $props();
 </script>
 
-<div class="output-msg">{msg.content}</div>
+<div>
+    {#if msg.type === 'error'}
+        <span class="error-msg">{msg.content}</span>
+    {:else}
+        <span class="output-msg">{msg.content}</span>
+    {/if}
+</div>
 
 <style>
     .output-msg {
         color: lightgray;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 12pt;
+    }
+
+    .error-msg {
+        color: red;
         font-family: 'Courier New', Courier, monospace;
         font-size: 12pt;
     }
