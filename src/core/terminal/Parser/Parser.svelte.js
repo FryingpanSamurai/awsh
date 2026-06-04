@@ -28,7 +28,10 @@ class Parser {
 
     parseArgs() {
         // find the first space and then parse the args from the options/flags
+        // one other consideration is that we need to parse strings
+        // e.g. passing arg "hello world" to echo command
         let spaceIndex = this.rawInput.indexOf(" ");
+
         if (spaceIndex != -1) {
             let args = this.cleanedInput.substr(this.rawInput.indexOf(" ") + 1).split(" ");
 

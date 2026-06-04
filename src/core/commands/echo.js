@@ -1,6 +1,8 @@
 export const echo = {
     name: "echo",
+    aliases: [],
     execute(args, context) {
-        return args;
+        // concatenate the args with spaces
+        return args.join(' ');
     }
 }

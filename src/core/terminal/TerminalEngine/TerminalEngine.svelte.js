@@ -4,6 +4,7 @@ import { get } from "svelte/store";
 import { pwdCommand } from "../../commands/pwd";
 import { clearCommand } from "../../commands/clear";
 import { whoamiCommand } from "../../commands/whoami";
+import { echo } from "../../commands/echo";
 
 class TerminalEngine {
     constructor() { 
@@ -12,6 +13,7 @@ class TerminalEngine {
         this.register(pwdCommand);
         this.register(clearCommand);
         this.register(whoamiCommand);
+        this.register(echo);
     }
 
     // isntantiate command registry
